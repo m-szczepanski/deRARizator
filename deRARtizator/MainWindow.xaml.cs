@@ -12,7 +12,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
-        private void SelectFileButton_Click(object sender, RoutedEventArgs e)
+        private void SelectFileButton_Click(object sender, RoutedEventArgs e) 
     {
         var openFileDialog = new OpenFileDialog
         {
