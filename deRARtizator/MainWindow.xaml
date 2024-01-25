@@ -13,7 +13,7 @@
         <Label Content="R" HorizontalAlignment="Left" Height="99" Margin="191,16,0,0" VerticalAlignment="Top" Width="60" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsEnabled="True" FontWeight="Bold" FontSize="72" Foreground="#FFD93538"/>
         <Label Content="A" HorizontalAlignment="Left" Height="99" Margin="241,16,0,0" VerticalAlignment="Top" Width="60" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsEnabled="True" FontWeight="Bold" FontSize="72" Foreground="#FF4181EB"/>
         <Label Content="R" HorizontalAlignment="Left" Height="99" Margin="290,16,0,0" VerticalAlignment="Top" Width="58" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsEnabled="True" FontWeight="Bold" FontSize="72" Foreground="#FF188250"/>
-        <Label Content="tizator" HorizontalAlignment="Left" Height="99" Margin="338,16,0,0" VerticalAlignment="Top" Width="233" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsEnabled="True" FontWeight="Bold" FontSize="72" Foreground="Black"/>
+        <Label Content="tizator" HorizontalAlignment="Left" Height="99" Margin="338,16,0,0" VerticalAlignment="Top" Width="233" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsEnabled="True" FontWeight="Bold" FontSize="72" Foreground="White"/>
 
         <TextBox x:Name="TextBox" HorizontalAlignment="Left" Margin="145,167,0,0" TextWrapping="Wrap" Text="File path" VerticalAlignment="Top" Width="348" TextAlignment="Center" Background="#282e39" Height="21" Foreground="White"/>
         <Button Content="Click to choose the file path" HorizontalAlignment="Left" Margin="145,193,0,0" VerticalAlignment="Top" Width="348" Height="34" Background="#353a42" Foreground="White" Click="SelectFileButton_Click" FontSize="16"/>
@@ -21,8 +21,7 @@
         <TextBox x:Name="DestinationTextBox" HorizontalAlignment="Left" Margin="145,240,0,0" TextWrapping="Wrap" Text="Destination path" VerticalAlignment="Top" Width="348" TextAlignment="Center" Background="#282e39" Height="21" Foreground="White"/>
         <Button Content="Chose destination path" HorizontalAlignment="Left" Margin="145,266,0,0" VerticalAlignment="Top" Width="348" Height="32" Background="#353a42" Foreground="White" Click="SelectFolderButton_Click" FontSize="16"/>
         <Button Content="Extract the file" HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="156" Margin="241,325,0,0" Background="#2D3250" Foreground="White" Click="ExtractButton_Click" FontSize="16" FontWeight="Bold"/>
-        <ProgressBar x:Name="progressBar" HorizontalAlignment="Left" Height="13" Margin="145,399,0,0" VerticalAlignment="Top" Width="426"/>
-        <Label x:Name="procentageValue" Content="0%" HorizontalAlignment="Left" Margin="576,393,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.066,0.868" Foreground="#353a42"/>
+        
 
 
 

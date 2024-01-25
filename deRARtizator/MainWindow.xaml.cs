@@ -51,11 +51,9 @@ public partial class MainWindow : Window
         ExtractRarFiles(rarFilePath, extractPath);
     }
 
-    int totalFile = 0; 
-    int completed = 0;
-
     private void ExtractRarFiles(string rarFilePath, string extractPath)
     {
+        int totalFile = 0;
         try
         {
             using (var archive = RarArchive.Open(rarFilePath))
