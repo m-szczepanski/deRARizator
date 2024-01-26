@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using Microsoft.Win32;
 using SharpCompress.Archives;
 using SharpCompress.Archives.Rar;
@@ -25,7 +26,7 @@ public partial class MainWindow : Window
 
         if (result == true)
         {
-            TextBox.Text = openFileDialog.FileName;
+            FilePath.Content = openFileDialog.FileName;
         }
     }
 
@@ -39,14 +40,14 @@ public partial class MainWindow : Window
 
         if (result == true)
         {
-            DestinationTextBox.Text = openFolderDialog.FolderName;
+            DestinationPath.Content = openFolderDialog.FolderName;
         }
     }
 
     private void ExtractButton_Click(object sender, RoutedEventArgs e)
     {
-        string rarFilePath = TextBox.Text;
-        string extractPath = DestinationTextBox.Text;
+        string rarFilePath = FilePath.Content.ToString();
+        string extractPath = DestinationPath.Content.ToString();
 
         ExtractRarFiles(rarFilePath, extractPath);
     }
@@ -83,4 +84,45 @@ public partial class MainWindow : Window
             MessageBox.Show($"Error opening RAR file: {openException.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
+
+    private void FilePathDrop(object sender, DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        {
+            string[] file = (string[]) e.Data.GetData(DataFormats.FileDrop);
+
+            if (file[0].ToString().EndsWith(".rar"))
+                FilePath.Content = file[0];
+            else
+                MessageBox.Show("Only .rar files are accepted.", "Error - bad file type.", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+        }
+        else
+        {
+            throw new NullReferenceException();
+        }
+    }
+
+    private void DestinationPathDrop(object sender, DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        {
+            string[] destination = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            if (Directory.Exists(destination[0]))
+            {
+                DestinationPath.Content = destination[0];
+            }
+            else
+            {
+                DestinationPath.Content = "Chose destination directory";
+                MessageBox.Show("Only directories are accepted here.", "Error - not a directory", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        else
+        {
+            throw new NotSupportedException("Bad format.");
+        }
+    }
+    
 }

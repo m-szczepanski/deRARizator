@@ -15,16 +15,20 @@
         <Label Content="R" HorizontalAlignment="Left" Height="99" Margin="290,16,0,0" VerticalAlignment="Top" Width="58" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsEnabled="True" FontWeight="Bold" FontSize="72" Foreground="#FF188250"/>
         <Label Content="tizator" HorizontalAlignment="Left" Height="99" Margin="338,16,0,0" VerticalAlignment="Top" Width="233" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsEnabled="True" FontWeight="Bold" FontSize="72" Foreground="White"/>
 
-        <TextBox x:Name="TextBox" HorizontalAlignment="Left" Margin="145,167,0,0" TextWrapping="Wrap" Text="File path" VerticalAlignment="Top" Width="348" TextAlignment="Center" Background="#282e39" Height="21" Foreground="White"/>
+        <StackPanel Background="#282e39" Margin="145,161,0,0" Height="26" Width="348" AllowDrop="True" VerticalAlignment="Top" HorizontalAlignment="Left" Drop="FilePathDrop">
+            <Label x:Name="FilePath" Content="drop .rar file here" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+                   Width="344" Height="27"
+                   />
+        </StackPanel>
+
         <Button Content="Click to choose the file path" HorizontalAlignment="Left" Margin="145,193,0,0" VerticalAlignment="Top" Width="348" Height="34" Background="#353a42" Foreground="White" Click="SelectFileButton_Click" FontSize="16"/>
-
-        <TextBox x:Name="DestinationTextBox" HorizontalAlignment="Left" Margin="145,240,0,0" TextWrapping="Wrap" Text="Destination path" VerticalAlignment="Top" Width="348" TextAlignment="Center" Background="#282e39" Height="21" Foreground="White"/>
-        <Button Content="Chose destination path" HorizontalAlignment="Left" Margin="145,266,0,0" VerticalAlignment="Top" Width="348" Height="32" Background="#353a42" Foreground="White" Click="SelectFolderButton_Click" FontSize="16"/>
+        <StackPanel Background="#282e39" Margin="145,238,0,0" Height="26" Width="348" AllowDrop="True" VerticalAlignment="Top" HorizontalAlignment="Left" Drop="DestinationPathDrop">
+            <Label x:Name="DestinationPath" Content="drop the destination folder here" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+                Width="344" Height="27"
+                   />
+        </StackPanel>
+        <Button Content="Chose destination directory" HorizontalAlignment="Left" Margin="145,266,0,0" VerticalAlignment="Top" Width="348" Height="32" Background="#353a42" Foreground="White" Click="SelectFolderButton_Click" FontSize="16"/>
         <Button Content="Extract the file" HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="156" Margin="241,325,0,0" Background="#2D3250" Foreground="White" Click="ExtractButton_Click" FontSize="16" FontWeight="Bold"/>
-        
-
-
-
 
     </Grid>
 </Window>
