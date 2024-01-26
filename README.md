@@ -1,4 +1,4 @@
-# "deRARtizator" is an application written for Windows to export files from RAR archives. If you do not have a WinRAR licence then this application is an excellent substitute.
+# "deRARizator" is an application written for Windows to export files from RAR archives. If you do not have a WinRAR licence then this application is an excellent substitute.
 
 ## The application allows files to be selected using a button that displays a Windows Explorer window or using drag&drop functionality, where files can be dragged into the programme.
 
