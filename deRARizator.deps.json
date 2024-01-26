@@ -7,12 +7,12 @@
   "targets": {
     ".NETCoreApp,Version=v8.0": {},
     ".NETCoreApp,Version=v8.0/win-x64": {
-      "deRARtizator/1.0.0": {
+      "deRARizator/1.0.0": {
         "dependencies": {
           "SharpCompress": "0.36.0"
         },
         "runtime": {
-          "deRARtizator.dll": {}
+          "deRARizator.dll": {}
         }
       },
       "SharpCompress/0.36.0": {
@@ -37,7 +37,7 @@
     }
   },
   "libraries": {
-    "deRARtizator/1.0.0": {
+    "deRARizator/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

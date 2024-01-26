@@ -5,7 +5,7 @@ using SharpCompress.Archives;
 using SharpCompress.Archives.Rar;
 using SharpCompress.Common;
 
-namespace deRARtizator;
+namespace deRARizator;
 
 public partial class MainWindow : Window
 {
