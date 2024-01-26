@@ -17,7 +17,7 @@ public partial class MainWindow : Window
     {
         var openFileDialog = new OpenFileDialog
         {
-            Filter = "All Files (*.*)|*.*|Text Files (*.rar)|*.txt",
+            Filter = "(*.rar)|",
 
             InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
         };
@@ -54,12 +54,10 @@ public partial class MainWindow : Window
 
     private void ExtractRarFiles(string rarFilePath, string extractPath)
     {
-        int totalFile = 0;
         try
         {
             using (var archive = RarArchive.Open(rarFilePath))
             {
-                totalFile = archive.Entries.Where(entry => !entry.IsDirectory).ToList().Count;
                 foreach (var entry in archive.Entries.Where(entry => !entry.IsDirectory))
                 {
                     try
