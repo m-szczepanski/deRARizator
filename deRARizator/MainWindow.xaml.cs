@@ -52,34 +52,44 @@ public partial class MainWindow : Window
         ExtractRarFiles(rarFilePath, extractPath);
     }
 
-    private void ExtractRarFiles(string rarFilePath, string extractPath)
+    private async void ExtractRarFiles(string rarFilePath, string extractPath)
     {
         try
         {
-            using (var archive = RarArchive.Open(rarFilePath))
+            await Task.Run(() =>
             {
-                foreach (var entry in archive.Entries.Where(entry => !entry.IsDirectory))
+                try
                 {
-                    try
+                    using (var archive = RarArchive.Open(rarFilePath))
                     {
-                        entry.WriteToDirectory(extractPath, new ExtractionOptions()
+                        foreach (var entry in archive.Entries.Where(entry => !entry.IsDirectory))
                         {
-                            ExtractFullPath = true,
-                            Overwrite = true,
-                        });
+                            try
+                            {
+                                entry.WriteToDirectory(extractPath, new ExtractionOptions()
+                                {
+                                    ExtractFullPath = true,
+                                    Overwrite = true,
+                                });
+                            }
+                            catch (Exception writeException)
+                            {
+                                MessageBox.Show($"Error extracting {entry.Key}: {writeException.Message}", "Extraction Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                        }
                     }
-                    catch (Exception writeException)
-                    {
-                        MessageBox.Show($"Error extracting {entry.Key}: {writeException.Message}", "Extraction Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-            }
 
-            MessageBox.Show("Extraction complete.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Extraction complete.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception openException)
+                {
+                    MessageBox.Show($"Error opening RAR file: {openException.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
         }
-        catch (Exception openException)
+        catch (Exception ex)
         {
-            MessageBox.Show($"Error opening RAR file: {openException.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
