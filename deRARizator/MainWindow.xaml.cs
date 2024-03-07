@@ -16,7 +16,7 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
-    private void SelectFileButton_Click(object sender, RoutedEventArgs e) 
+    private void SelectFileButton_Click(object sender, RoutedEventArgs e)
     {
         var openFileDialog = new OpenFileDialog()
         {
@@ -50,8 +50,8 @@ public partial class MainWindow : Window
         progressBar.Value = 0;
     }
 
-    int totalFile = 0;
-    int completed = 0;
+    private int totalFile = 0;
+    private int completed = 0;
 
     private async void ExtractButton_Click(object sender, RoutedEventArgs e)
     {
@@ -92,9 +92,7 @@ public partial class MainWindow : Window
                             Interlocked.Increment(ref completed);
                             var percentage = Convert.ToInt16(((double)completed / totalFile * 1.0) * 100d);
 
-                            // Aktualizuj ProgressBar za pomocą obiektu IProgress na wątku interfejsu użytkownika
                             progress.Report(completed);
-
                         }
                         catch (Exception writeException)
                         {
@@ -116,7 +114,7 @@ public partial class MainWindow : Window
     {
         if (e.Data.GetDataPresent(DataFormats.FileDrop))
         {
-            string[] file = (string[]) e.Data.GetData(DataFormats.FileDrop);
+            string[] file = (string[])e.Data.GetData(DataFormats.FileDrop);
 
             if (file[0].ToString().EndsWith(".rar"))
                 FilePath.Content = file[0];
