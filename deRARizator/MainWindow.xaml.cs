@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using Microsoft.Win32;
 using SharpCompress.Archives;
 using SharpCompress.Archives.Rar;
@@ -26,6 +28,8 @@ public partial class MainWindow : Window
         {
             FilePath.Content = openFileDialog.FileName;
         }
+
+        progressBar.Value = 0;
     }
 
     private void SelectFolderButton_Click(object sender, RoutedEventArgs e)
@@ -41,40 +45,65 @@ public partial class MainWindow : Window
         {
             DestinationPath.Content = openFolderDialog.FolderName;
         }
+
+        progressBar.Value = 0;
     }
+
+    int totalFile = 0;
+    int completed = 0;
 
     private async void ExtractButton_Click(object sender, RoutedEventArgs e)
     {
         string rarFilePath = FilePath.Content.ToString();
         string extractPath = DestinationPath.Content.ToString();
 
-        await Task.Run(() => ExtractRarFiles(rarFilePath, extractPath));
+        completed = 0;
+
+        IProgress<int> progress = new Progress<int>(value =>
+        {
+            progressBar.Value = value;
+        });
+
+        await ExtractRarFiles(rarFilePath, extractPath, progress);
     }
 
-    private void ExtractRarFiles(string rarFilePath, string extractPath)
+    private async Task ExtractRarFiles(string rarFilePath, string extractPath, IProgress<int> progress)
     {
         try
         {
             using (var archive = RarArchive.Open(rarFilePath))
             {
-                foreach (var entry in archive.Entries.Where(entry => !entry.IsDirectory))
-                {
-                    try
-                    {
-                        entry.WriteToDirectory(extractPath, new ExtractionOptions()
-                        {
-                            ExtractFullPath = true,
-                            Overwrite = true,
-                        });
-                    }
-                    catch (Exception writeException)
-                    {
-                        MessageBox.Show($"Error extracting {entry.Key}: {writeException.Message}", "Extraction Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-            }
+                totalFile = archive.Entries.Where(entry => !entry.IsDirectory).ToList().Count;
+                progressBar.Maximum = totalFile;
 
-            MessageBox.Show("Extraction complete.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                await Task.Run(() =>
+                {
+                    foreach (var entry in archive.Entries.Where(entry => !entry.IsDirectory))
+                    {
+                        try
+                        {
+                            entry.WriteToDirectory(extractPath, new ExtractionOptions()
+                            {
+                                ExtractFullPath = true,
+                                Overwrite = true,
+                            });
+
+                            Interlocked.Increment(ref completed);
+                            var percentage = Convert.ToInt16(((double)completed / totalFile * 1.0) * 100d);
+
+                            // Aktualizuj ProgressBar za pomocą obiektu IProgress na wątku interfejsu użytkownika
+                            progress.Report(completed);
+
+                        }
+                        catch (Exception writeException)
+                        {
+                            MessageBox.Show($"Error extracting {entry.Key}: {writeException.Message}", "Extraction Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                });
+
+                MessageBox.Show("Extraction complete.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
         catch (Exception openException)
         {
@@ -98,6 +127,8 @@ public partial class MainWindow : Window
         {
             throw new NullReferenceException();
         }
+
+        progressBar.Value = 0;
     }
 
     private void DestinationPathDrop(object sender, DragEventArgs e)
@@ -120,6 +151,7 @@ public partial class MainWindow : Window
         {
             throw new NotSupportedException("Bad format.");
         }
+
+        progressBar.Value = 0;
     }
-    
 }
