@@ -13,12 +13,10 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
-        private void SelectFileButton_Click(object sender, RoutedEventArgs e) 
+    private void SelectFileButton_Click(object sender, RoutedEventArgs e) 
     {
-        var openFileDialog = new OpenFileDialog
+        var openFileDialog = new OpenFileDialog()
         {
-            Filter = "(*.rar)|",
-
             InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
         };
 
@@ -36,6 +34,7 @@ public partial class MainWindow : Window
         {
             InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
         };
+
         bool? result = openFolderDialog.ShowDialog();
 
         if (result == true)
@@ -44,52 +43,42 @@ public partial class MainWindow : Window
         }
     }
 
-    private void ExtractButton_Click(object sender, RoutedEventArgs e)
+    private async void ExtractButton_Click(object sender, RoutedEventArgs e)
     {
         string rarFilePath = FilePath.Content.ToString();
         string extractPath = DestinationPath.Content.ToString();
 
-        ExtractRarFiles(rarFilePath, extractPath);
+        await Task.Run(() => ExtractRarFiles(rarFilePath, extractPath));
     }
 
-    private async void ExtractRarFiles(string rarFilePath, string extractPath)
+    private void ExtractRarFiles(string rarFilePath, string extractPath)
     {
         try
         {
-            await Task.Run(() =>
+            using (var archive = RarArchive.Open(rarFilePath))
             {
-                try
+                foreach (var entry in archive.Entries.Where(entry => !entry.IsDirectory))
                 {
-                    using (var archive = RarArchive.Open(rarFilePath))
+                    try
                     {
-                        foreach (var entry in archive.Entries.Where(entry => !entry.IsDirectory))
+                        entry.WriteToDirectory(extractPath, new ExtractionOptions()
                         {
-                            try
-                            {
-                                entry.WriteToDirectory(extractPath, new ExtractionOptions()
-                                {
-                                    ExtractFullPath = true,
-                                    Overwrite = true,
-                                });
-                            }
-                            catch (Exception writeException)
-                            {
-                                MessageBox.Show($"Error extracting {entry.Key}: {writeException.Message}", "Extraction Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            }
-                        }
+                            ExtractFullPath = true,
+                            Overwrite = true,
+                        });
                     }
+                    catch (Exception writeException)
+                    {
+                        MessageBox.Show($"Error extracting {entry.Key}: {writeException.Message}", "Extraction Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
 
-                    MessageBox.Show("Extraction complete.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                catch (Exception openException)
-                {
-                    MessageBox.Show($"Error opening RAR file: {openException.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            });
+            MessageBox.Show("Extraction complete.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-        catch (Exception ex)
+        catch (Exception openException)
         {
-            MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show($"Error opening RAR file: {openException.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
