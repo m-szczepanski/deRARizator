@@ -6,8 +6,6 @@
 <img src="images/image1.png">
 <img src="images/image2.png">
 
-### Unfortunately, at this stage in the development of the application, no progress indicator showing the progress of file extraction has been implemented. This will be corrected at a later stage.
-
 <h3>Stack:</h3>
 <ul>
  <li>.Net - WPF</li>
