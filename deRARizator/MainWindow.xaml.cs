@@ -25,10 +25,7 @@ public partial class MainWindow : Window
 
         bool? result = openFileDialog.ShowDialog();
 
-        if (result == true)
-        {
-            FilePath.Content = openFileDialog.FileName;
-        }
+        FilePath.Content = result == true ? openFileDialog.FileName : "drop .rar file here";
 
         progressBar.Value = 0;
     }
@@ -42,10 +39,7 @@ public partial class MainWindow : Window
 
         bool? result = openFolderDialog.ShowDialog();
 
-        if (result == true)
-        {
-            DestinationPath.Content = openFolderDialog.FolderName;
-        }
+        DestinationPath.Content = result == true ? openFolderDialog.FolderName : "drop the destination folder here";
 
         progressBar.Value = 0;
     }
