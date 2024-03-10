@@ -30,7 +30,7 @@ public partial class MainWindow : Window
             FilePath.Content = openFileDialog.FileName;
         }
 
-        progressBar.Value = 0;
+        ProgressBar.Value = 0;
     }
 
     private void SelectFolderButton_Click(object sender, RoutedEventArgs e)
@@ -47,7 +47,7 @@ public partial class MainWindow : Window
             DestinationPath.Content = openFolderDialog.FolderName;
         }
 
-        progressBar.Value = 0;
+        ProgressBar.Value = 0;
     }
 
     private int totalFile = 0;
@@ -62,7 +62,7 @@ public partial class MainWindow : Window
 
         IProgress<int> progress = new Progress<int>(value =>
         {
-            progressBar.Value = value;
+            ProgressBar.Value = value;
         });
 
         await ExtractRarFiles(rarFilePath, extractPath, progress);
@@ -75,7 +75,7 @@ public partial class MainWindow : Window
             using (var archive = RarArchive.Open(rarFilePath))
             {
                 totalFile = archive.Entries.Where(entry => !entry.IsDirectory).ToList().Count;
-                progressBar.Maximum = totalFile;
+                ProgressBar.Maximum = totalFile;
 
                 await Task.Run(() =>
                 {
@@ -127,7 +127,7 @@ public partial class MainWindow : Window
             throw new NullReferenceException();
         }
 
-        progressBar.Value = 0;
+        ProgressBar.Value = 0;
     }
 
     private void DestinationPathDrop(object sender, DragEventArgs e)
@@ -151,6 +151,6 @@ public partial class MainWindow : Window
             throw new NotSupportedException("Bad format.");
         }
 
-        progressBar.Value = 0;
+        ProgressBar.Value = 0;
     }
 }

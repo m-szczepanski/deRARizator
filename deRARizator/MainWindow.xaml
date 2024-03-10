@@ -33,7 +33,7 @@
         </StackPanel>
         <Button Content="Chose destination directory" HorizontalAlignment="Left" Margin="110,266,0,0" VerticalAlignment="Top" Width="348" Height="32" Background="#353a42" Foreground="White" Click="SelectFolderButton_Click" FontSize="16" Grid.Column="1"/>
         <Button Content="Extract the file" HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="156" Margin="206,325,0,0" Background="#2D3250" Foreground="White" Click="ExtractButton_Click" FontSize="16" FontWeight="Bold" Grid.Column="1"/>
-        <ProgressBar x:Name="progressBar" Grid.Column="1" HorizontalAlignment="Left" Height="12" Margin="110,402,0,0" VerticalAlignment="Top" Width="348" Minimum="0" Maximum="100"/>
+        <ProgressBar x:Name="ProgressBar" Grid.Column="1" HorizontalAlignment="Left" Height="12" Margin="110,402,0,0" VerticalAlignment="Top" Width="348" Minimum="0" Maximum="100"/>
 
     </Grid>
 </Window>
