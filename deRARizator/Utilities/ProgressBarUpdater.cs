@@ -8,7 +8,5 @@ namespace deRARizator.Utilities
         {
             progress.Report(value);
         }
-
-        // Add more utility methods related to ProgressBar here
     }
 }

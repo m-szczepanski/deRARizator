@@ -18,7 +18,7 @@ namespace deRARizator.Services
                 using (var archive = RarArchive.Open(rarFilePath))
                 {
                     int totalFile = archive.Entries.Count(entry => !entry.IsDirectory);
-                    progress.Report(0); // Initialize progress
+                    progress.Report(0);
 
                     await Task.Run(() =>
                     {
